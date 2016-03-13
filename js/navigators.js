@@ -11,6 +11,17 @@ var sprite;
 var marker;
 var blocked = false;
 
+var agents = [];
+
+function setupAgents(count){
+    for(var i = 0; i < count; i++){0
+        agents.push({
+            steps: [],
+            stepsIndex: 0
+        });
+    }
+}
+
 var mainState = {
     preload: function(){
         game.load.tilemap('desert', 'assets/img/desert.json', null, Phaser.Tilemap.TILED_JSON);
@@ -85,6 +96,7 @@ function findPathTo(tilex, tiley) {
     pathfinder.setCallbackFunction(function(path) {
         path = path || [];
         for(var i = 0, ilen = path.length; i < ilen; i++) {
+            console.log(path[i].x, path[i].y);
             map.putTile(46, path[i].x, path[i].y);
         }
         blocked = false;
