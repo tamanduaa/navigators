@@ -11,8 +11,8 @@ var sprite;
 var marker;
 var blocked = false;
 var delay = 0;
-
 var agents = [];
+
 
 var mainState = {
     preload: function(){
@@ -46,15 +46,11 @@ var mainState = {
         marker.lineStyle(2, 0x000000, 1);
         marker.drawRect(0, 0, 32, 32);
 
-        setupAgents(3);
-
-        findAgentPath({x: 0, y: 0}, {x: 24, y: 14}, agents[0]); 
-        findAgentPath({x: 0, y: 0}, {x: 38, y: 19}, agents[1]); 
-        findAgentPath({x: 0, y: 0}, {x: 15, y: 36}, agents[2]); 
-
-        agents.forEach(function(agent){
-            advanceTween(agent);
-        });
+        setupAgents(agentPaths.length);
+        agentPaths.forEach(function(agentPath, index){
+            findAgentPath(agentPath.start, agentPath.end, agents[index]);
+            advanceTween(agents[index]);
+        })
 
     },
     update: function() {
