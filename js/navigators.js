@@ -13,15 +13,6 @@ var blocked = false;
 
 var agents = [];
 
-function setupAgents(count){
-    for(var i = 0; i < count; i++){0
-        agents.push({
-            steps: [],
-            stepsIndex: 0
-        });
-    }
-}
-
 var mainState = {
     preload: function(){
         game.load.tilemap('desert', 'assets/img/desert.json', null, Phaser.Tilemap.TILED_JSON);
@@ -106,5 +97,31 @@ function findPathTo(tilex, tiley) {
     pathfinder.calculatePath();
 }
 
+function setupAgents(count){
+    for(var i = 0; i < count; i++){0
+        agents.push({
+            steps: [],
+            stepsIndex: 0
+        });
+    }
+}
+
+function findAgentPath(targetx, targety, agent){
+    pathfinder.setCallbackFunction(function(path) {
+        path = path || [];
+        for(var i = 0, ilen = path.length; i < ilen; i++) {
+           agent.steps.push([path[i].x, path[i].y]);
+        }
+        blocked = false;
+    });
+
+    pathfinder.preparePathCalculation([0,0], [targetx,targety]);
+    pathfinder.calculatePath();
+}
+
+setupAgents(3);
+findAgentPath(24, 14, agents[0]); 
+findAgentPath(38, 19, agents[1]); 
+findAgentPath(15, 36, agents[2]); 
 game.state.add('main', mainState);
 game.state.start('main');
