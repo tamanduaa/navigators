@@ -9,4 +9,5 @@ to allow a host of agents to navigate a mapped space
 
 * node.js
 
-Run node index.js to start a local server on port 8000
+Run npm install in the root of the project to install dependencies, then run
+node index.js to start a local server on port 8000
