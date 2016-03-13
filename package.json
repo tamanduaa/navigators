@@ -1,0 +1,18 @@
+{
+  "name": "navigators",
+  "version": "1.0.0",
+  "description": "watch one or many agents navigate a tilemap",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pathfinding",
+    "phaser"
+  ],
+  "author": "Steve Minor, Lauren Perry",
+  "license": "ISC",
+  "devDependencies": {
+    "node-http-server": "^5.1.0"
+  }
+}
