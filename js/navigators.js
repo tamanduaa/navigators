@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(1280, 640, Phaser.CANVAS, 'gameContainer');
+var game = new Phaser.Game(1300, 700, Phaser.CANVAS, 'gameContainer');
 
 var map;
 var tileset;
@@ -21,7 +21,7 @@ var mainState = {
         game.load.image('tiles', 'assets/img/terrain_atlas.png');
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
-        game.load.image('greensquare', 'assets/img/blue.png');
+        game.load.image('greensquare', 'assets/img/green.png');
     },
 
 
@@ -33,6 +33,7 @@ var mainState = {
         map.addTilesetImage('terrain_atlas', 'tiles');
         currentTile = map.getTile(2, 3);
         layer = map.createLayer('floor');
+        map.setCollisionBetween(1, 100000, true, 'floor');
         layer.resizeWorld();
 
         var walkables = [30];
