@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameContainer');
+var game = new Phaser.Game(1280, 640, Phaser.CANVAS, 'gameContainer');
 
 var map;
 var tileset;
@@ -17,8 +17,8 @@ var agents = [];
 
 var mainState = {
     preload: function(){
-        game.load.tilemap('desert', 'assets/img/desert.json', null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('tiles', 'assets/img/tmw_desert_spacing.png');
+        game.load.tilemap('map3', 'assets/img/map3.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('tiles', 'assets/img/tiles_spritesheet.png');
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
         game.load.image('greensquare', 'assets/img/green.png');
@@ -29,10 +29,10 @@ var mainState = {
     create: function(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        map = game.add.tilemap('desert');
-        map.addTilesetImage('Desert', 'tiles');
+        map = game.add.tilemap('map3');
+        map.addTilesetImage('tiles_spritesheet', 'tiles');
         currentTile = map.getTile(2, 3);
-        layer = map.createLayer('Ground');
+        layer = map.createLayer('floor');
         layer.resizeWorld();
 
         var walkables = [30];
