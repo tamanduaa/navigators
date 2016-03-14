@@ -32,7 +32,7 @@ var mainState = {
         layer = map.createLayer('floor');
         layer.resizeWorld();
 
-        var walkables = [0];
+        var walkables = [267];
         pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
         pathfinder.setGrid(map.layers[0].data, walkables);
 
@@ -45,7 +45,7 @@ var mainState = {
 
         cursors = game.input.keyboard.createCursorKeys();
         marker = game.add.graphics();
-        marker.lineStyle(2, 0x000000, 1);
+        marker.lineStyle(2, 0xFFFFFF, 1);
         marker.drawRect(0, 0, 32, 32);
 
         setupAgents(agentPaths.length);
