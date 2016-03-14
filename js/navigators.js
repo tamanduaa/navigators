@@ -14,18 +14,15 @@ var delay = 0;
 var agents = [];
 
 
-
 var mainState = {
     preload: function(){
-        game.load.tilemap('test', 'assets/img/test.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('test', 'assets/test.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'assets/img/terrain_atlas.png');
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
         game.load.image('greensquare', 'assets/img/green.png');
     },
 
-
-   
     create: function(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -36,8 +33,7 @@ var mainState = {
         map.setCollisionBetween(1, 100000, true, 'floor');
         layer.resizeWorld();
 
-        var walkables = [30];
-
+        var walkables = [267];
         pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
         pathfinder.setGrid(map.layers[0].data, walkables);
 
@@ -50,7 +46,7 @@ var mainState = {
 
         cursors = game.input.keyboard.createCursorKeys();
         marker = game.add.graphics();
-        marker.lineStyle(2, 0x000000, 1);
+        marker.lineStyle(2, 0xFFFFFF, 1);
         marker.drawRect(0, 0, 32, 32);
 
         setupAgents(agentPaths.length);
@@ -86,20 +82,10 @@ var mainState = {
 
         if (game.input.mousePointer.isDown)
         {
+            console.log(marker.x, marker.y);
             blocked = true;
             findPathTo(layer.getTileX(marker.x), layer.getTileY(marker.y));
         }
-
-        // march agents along
-        // if(delay++ % 5 == 0){
-        //     agents.forEach(function(agent){
-        //         //update the position of agent
-        //         agent.sprite.x = agent.steps[agent.stepsIndex].x * 32;
-        //         agent.sprite.y = agent.steps[agent.stepsIndex].y * 32;
-        //         ++agent.stepsIndex;
-        //         agent.stepsIndex %= agent.steps.length;
-        //     });
-        // }
     },
     render: function(){
 
@@ -121,12 +107,9 @@ function findPathTo(tilex, tiley) {
 }
 
 function setupAgents(count){
-     
     for(var i = 0; i < count; i++){
-        var agentTypes = [ 'redsquare', 'purplesquare', 'greensquare' ];
-        randomSprite = agentTypes[
-        Math.floor(Math.random() * agentTypes.length)
-    ];
+        var agentTypes = ['redsquare','purplesquare','greensquare'];
+        randomSprite = agentTypes[Math.floor(Math.random() * agentTypes.length)];
         agents.push({
             steps: [],
             stepsIndex: 0,
