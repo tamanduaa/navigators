@@ -17,11 +17,11 @@ var agents = [];
 
 var mainState = {
     preload: function(){
-        game.load.tilemap('map3', 'assets/img/map3.json', null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('tiles', 'assets/img/tiles_spritesheet.png');
+        game.load.tilemap('test', 'assets/img/test.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('tiles', 'assets/img/terrain_atlas.png');
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
-        game.load.image('greensquare', 'assets/img/green.png');
+        game.load.image('greensquare', 'assets/img/blue.png');
     },
 
 
@@ -29,8 +29,8 @@ var mainState = {
     create: function(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        map = game.add.tilemap('map3');
-        map.addTilesetImage('tiles_spritesheet', 'tiles');
+        map = game.add.tilemap('test');
+        map.addTilesetImage('terrain_atlas', 'tiles');
         currentTile = map.getTile(2, 3);
         layer = map.createLayer('floor');
         layer.resizeWorld();

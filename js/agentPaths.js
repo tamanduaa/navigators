@@ -1,15 +1,15 @@
 var agentPaths = [
 	{
 		start: {x: 0, y: 0},
-		end: {x: 24, y: 14}
+		end: {x: 23, y: 12}
 	},
 	{
 		start: {x: 0, y: 0},
-		end: {x: 38, y: 19}
+		end: {x: 13, y: 8}
 	},
 	{
 		start: {x: 0, y: 0},
-		end: {x: 15, y: 36}
+		end: {x: 39, y: 3}
 	}
 ];
 
