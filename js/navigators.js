@@ -14,12 +14,18 @@ var delay = 0;
 var agents = [];
 
 
+
 var mainState = {
     preload: function(){
         game.load.tilemap('desert', 'assets/img/desert.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'assets/img/tmw_desert_spacing.png');
-        game.load.image('car', 'assets/img/car90.png');
+        game.load.image('redsquare', 'assets/img/red.png');
+        game.load.image('purplesquare', 'assets/img/purple.png');
+        game.load.image('greensquare', 'assets/img/green.png');
     },
+
+
+   
     create: function(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -34,7 +40,7 @@ var mainState = {
         pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
         pathfinder.setGrid(map.layers[0].data, walkables);
 
-        sprite = game.add.sprite(450, 80, 'car');
+        sprite = game.add.sprite(450, 80, 'redsquare');
         sprite.anchor.setTo(0.5, 0.5);
 
         game.physics.enable(sprite);
@@ -114,11 +120,16 @@ function findPathTo(tilex, tiley) {
 }
 
 function setupAgents(count){
+     
     for(var i = 0; i < count; i++){
+        var agentTypes = [ 'redsquare', 'purplesquare', 'greensquare' ];
+        randomSprite = agentTypes[
+        Math.floor(Math.random() * agentTypes.length)
+    ];
         agents.push({
             steps: [],
             stepsIndex: 0,
-            sprite: game.add.sprite(0, 0, 'car')
+            sprite: game.add.sprite(0, 0, randomSprite)
         });
     }
 }
