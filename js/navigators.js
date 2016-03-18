@@ -23,11 +23,11 @@ var bootState = {
         game.load.image('greensquare', 'assets/img/blue.png');
     },
     create: function(){
-        game.state.start('main');
+        game.state.start('map1');
     }
 }
 
-var mainState = {
+var map1State = {
     preload: function(){
        
     },
@@ -154,5 +154,5 @@ function advanceTween(agent){
 }
 
 game.state.add('boot', bootState);
-game.state.add('main', mainState);
+game.state.add('map1', map1State);
 game.state.start('boot');
