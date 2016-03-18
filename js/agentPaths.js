@@ -1,6 +1,6 @@
 var agentPaths = [
 	{
-		start: {x: 23, y: 5},
+		start: {x: 0, y: 0},
 		end: {x: 31, y: 14}
 	},
 	{
@@ -9,7 +9,7 @@ var agentPaths = [
 	},
 	{
 		start: {x: 0, y: 0},
-		end: {x: 10, y: 12}
+		end: {x: 20, y: 1}
 	},
 	{
 		start: {x: 0, y: 0},
@@ -17,15 +17,11 @@ var agentPaths = [
 	},
 	{
 		start: {x: 0, y: 0},
-		end: {x: 7, y: 13}
+		end: {x: 22, y: 1}
 	},
 	{
 		start: {x: 0, y: 0},
-		end: {x: 20, y: 12}
-	},
-	{
-		start: {x: 0, y: 0},
-		end: {x: 12, y: 18}
+		end: {x: 32, y: 1}
 	}
 ];
 

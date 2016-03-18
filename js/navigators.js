@@ -17,6 +17,7 @@ var agents = [];
 var mainState = {
     preload: function(){
         game.load.tilemap('test', 'assets/test.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('test2', 'assets/test2.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'assets/img/terrain_atlas.png');
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
@@ -26,14 +27,28 @@ var mainState = {
     create: function(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        map = game.add.tilemap('test');
+       // map = game.add.tilemap('test');
+        var a=1;
+        if (a==1){
+             map = game.add.tilemap('test2');  
+            var walkables = [34];
+        } else {
+           
+            map = game.add.tilemap('test');
+            var walkables = [267];
+        };
+      
+
+         
+
+      //  document.getElementById("switchMaps").onclick = function () { alert('hello!'); };
+        
         map.addTilesetImage('terrain_atlas', 'tiles');
         currentTile = map.getTile(2, 3);
         layer = map.createLayer('floor');
         map.setCollisionBetween(1, 100000, true, 'floor');
         layer.resizeWorld();
-
-        var walkables = [267];
+      //  var walkables = [34];
         pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
         pathfinder.setGrid(map.layers[0].data, walkables);
 
