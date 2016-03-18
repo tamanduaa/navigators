@@ -5,6 +5,7 @@ var map;
 var tileset;
 var layer;
 var pathfinder;
+var mapStates = {};
 
 var cursors;
 var marker;
@@ -15,81 +16,75 @@ var text;
 
 var bootState = {
     preload: function(){
-        game.load.tilemap('test', 'assets/test.json', null, Phaser.Tilemap.TILED_JSON);
-        game.load.tilemap('test2', 'assets/test2.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'assets/img/terrain_atlas.png');
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
         game.load.image('greensquare', 'assets/img/blue.png');
+
+        maps.forEach(function(map){
+            game.load.tilemap(map.name, 'assets/' + map.filename, null, Phaser.Tilemap.TILED_JSON);
+            agents[map.name] = new MapState(map.name, map.walkables, map.agents);
+            game.state.add(map.name, agents[map.name]);
+        })
+        
     },
     create: function(){
-        game.state.start('map1');
+        game.state.start(maps[0].name);
     }
 }
 
-var map1State = {
-    preload: function(){
-       
-    },
+var MapState = function(mapName, walkables, agentPaths){
+    return {
+        preload: function(){
 
-    create: function(){
-        game.physics.startSystem(Phaser.Physics.ARCADE);
+        },
 
-       // map = game.add.tilemap('test');
-        var a=1;
-        if (a==1){
-             map = game.add.tilemap('test2');  
-            var walkables = [34];
-        } else {
-           
-            map = game.add.tilemap('test');
-            var walkables = [267];
-        };
-        
-        map.addTilesetImage('terrain_atlas', 'tiles');
-        currentTile = map.getTile(2, 3);
-        layer = map.createLayer('floor');
-        map.setCollisionBetween(1, 100000, true, 'floor');
-        layer.resizeWorld();
-      //  var walkables = [34];
-        pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
-        pathfinder.setGrid(map.layers[0].data, walkables);
+        create: function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            map = game.add.tilemap(mapName);
+            map.addTilesetImage('terrain_atlas', 'tiles');
+            currentTile = map.getTile(2, 3);
+            layer = map.createLayer('floor');
+            map.setCollisionBetween(1, 100000, true, 'floor');
+            layer.resizeWorld();
+            pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
+            pathfinder.setGrid(map.layers[0].data, walkables);
 
-        cursors = game.input.keyboard.createCursorKeys();
-        marker = game.add.graphics();
-        marker.lineStyle(2, 0xFFFFFF, 1);
-        marker.drawRect(0, 0, 32, 32);
+            marker = game.add.graphics();
+            marker.lineStyle(2, 0xFFFFFF, 1);
+            marker.drawRect(0, 0, 32, 32);
 
-        setupAgents(agentPaths.length);
-        agentPaths.forEach(function(agentPath, index){
-            findAgentPath(agentPath.start, agentPath.end, agents[index]);
-            advanceTween(agents[index]);
-        });
+            setupAgents(agentPaths.length);
+            agentPaths.forEach(function(agentPath, index){
+                findAgentPath(agentPath.start, agentPath.end, agents[index]);
+                advanceTween(agents[index]);
+            });
 
-        var style = {
-            font: '14px Arial',
-            fill: '#fff',
-            align: 'left'
+            var style = {
+                font: '14px Arial',
+                fill: '#fff',
+                align: 'left'
+            }
+            text = game.add.text(game.world.width - 150, game.world.height - 100, '0, 0', style);
+
+        },
+        update: function() {
+            marker.x = layer.getTileX(game.input.activePointer.worldX) * 32;
+            marker.y = layer.getTileY(game.input.activePointer.worldY) * 32;
+
+            if (game.input.mousePointer.isDown)
+            {
+                console.log(marker.x, marker.y);
+                blocked = true;
+                findPathTo(layer.getTileX(marker.x), layer.getTileY(marker.y));
+            }
+
+            text.text = marker.x/32 + ', ' + marker.y/32;
+
+        },
+        render: function(){
+
         }
-        text = game.add.text(game.world.width - 150, game.world.height - 100, '0, 0', style);
-
-    },
-    update: function() {
-        marker.x = layer.getTileX(game.input.activePointer.worldX) * 32;
-        marker.y = layer.getTileY(game.input.activePointer.worldY) * 32;
-
-        if (game.input.mousePointer.isDown)
-        {
-            console.log(marker.x, marker.y);
-            blocked = true;
-            findPathTo(layer.getTileX(marker.x), layer.getTileY(marker.y));
-        }
-
-        text.text = marker.x/32 + ', ' + marker.y/32;
-
-    },
-    render: function(){
-
     }
 }
 
@@ -108,6 +103,7 @@ function findPathTo(tilex, tiley) {
 }
 
 function setupAgents(count){
+    agents = [];
     for(var i = 0; i < count; i++){
         var agentTypes = ['redsquare','purplesquare','greensquare'];
         randomSprite = agentTypes[Math.floor(Math.random() * agentTypes.length)];
@@ -154,5 +150,4 @@ function advanceTween(agent){
 }
 
 game.state.add('boot', bootState);
-game.state.add('map1', map1State);
 game.state.start('boot');
