@@ -7,14 +7,13 @@ var layer;
 var pathfinder;
 
 var cursors;
-var sprite;
 var marker;
 var blocked = false;
 var delay = 0;
 var agents = [];
+var text;
 
-
-var mainState = {
+var bootState = {
     preload: function(){
         game.load.tilemap('test', 'assets/test.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.tilemap('test2', 'assets/test2.json', null, Phaser.Tilemap.TILED_JSON);
@@ -22,6 +21,15 @@ var mainState = {
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
         game.load.image('greensquare', 'assets/img/blue.png');
+    },
+    create: function(){
+        game.state.start('main');
+    }
+}
+
+var mainState = {
+    preload: function(){
+       
     },
 
     create: function(){
@@ -37,11 +45,6 @@ var mainState = {
             map = game.add.tilemap('test');
             var walkables = [267];
         };
-      
-
-         
-
-      //  document.getElementById("switchMaps").onclick = function () { alert('hello!'); };
         
         map.addTilesetImage('terrain_atlas', 'tiles');
         currentTile = map.getTile(2, 3);
@@ -52,13 +55,6 @@ var mainState = {
         pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
         pathfinder.setGrid(map.layers[0].data, walkables);
 
-        sprite = game.add.sprite(450, 80, 'redsquare');
-        sprite.anchor.setTo(0.5, 0.5);
-
-        game.physics.enable(sprite);
-
-        game.camera.follow(sprite);
-
         cursors = game.input.keyboard.createCursorKeys();
         marker = game.add.graphics();
         marker.lineStyle(2, 0xFFFFFF, 1);
@@ -68,30 +64,17 @@ var mainState = {
         agentPaths.forEach(function(agentPath, index){
             findAgentPath(agentPath.start, agentPath.end, agents[index]);
             advanceTween(agents[index]);
-        })
+        });
+
+        var style = {
+            font: '14px Arial',
+            fill: '#fff',
+            align: 'left'
+        }
+        text = game.add.text(game.world.width - 150, game.world.height - 100, '0, 0', style);
 
     },
     update: function() {
-        game.physics.arcade.collide(sprite, layer);
-
-        sprite.body.velocity.x = 0;
-        sprite.body.velocity.y = 0;
-        sprite.body.angularVelocity = 0;
-
-        if (cursors.left.isDown)
-        {
-            sprite.body.angularVelocity = -200;
-        }
-        else if (cursors.right.isDown)
-        {
-            sprite.body.angularVelocity = 200;
-        }
-
-        if (cursors.up.isDown)
-        {
-            sprite.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(sprite.angle, 300));
-        }
-
         marker.x = layer.getTileX(game.input.activePointer.worldX) * 32;
         marker.y = layer.getTileY(game.input.activePointer.worldY) * 32;
 
@@ -101,6 +84,9 @@ var mainState = {
             blocked = true;
             findPathTo(layer.getTileX(marker.x), layer.getTileY(marker.y));
         }
+
+        text.text = marker.x/32 + ', ' + marker.y/32;
+
     },
     render: function(){
 
@@ -167,5 +153,6 @@ function advanceTween(agent){
     }
 }
 
+game.state.add('boot', bootState);
 game.state.add('main', mainState);
-game.state.start('main');
+game.state.start('boot');
