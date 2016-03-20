@@ -17,8 +17,10 @@ var text;
 var bootState = {
     preload: function(){
         //load tiles, agent sprites images
+        game.load.image('sushibg', 'assets/img/SushiMiogaConveyBeltTest-01.png');
         game.load.image('tiles', 'assets/img/terrain_atlas.png');
-        game.load.image('redsquare', 'assets/img/red.png');
+        game.load.image('redsquare', 'assets/img/nigiri_small.png');
+        game.load.image('maki', 'assets/img/maki_small.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
         game.load.image('greensquare', 'assets/img/blue.png');
 
@@ -47,6 +49,7 @@ var MapState = function(mapName, walkables, agentPaths){
             game.physics.startSystem(Phaser.Physics.ARCADE);
             map = game.add.tilemap(mapName);
             map.addTilesetImage('terrain_atlas', 'tiles');
+            game.add.sprite(0, 0, 'sushibg');
             currentTile = map.getTile(2, 3);
             layer = map.createLayer('floor');
             map.setCollisionBetween(1, 100000, true, 'floor');
@@ -129,8 +132,8 @@ function findAgentPath(start, end, agent){
         path = path || [];
         for(var i = 0, ilen = path.length; i < ilen; i++) {
            agent.steps.push({
-                x: path[i].x * 32,
-                y: path[i].y * 32
+                x: path[i].x * 16,
+                y: path[i].y * 16
            });
         }
         blocked = false;
