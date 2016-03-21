@@ -20,7 +20,7 @@ var bootState = {
         game.load.image('tiles', 'assets/img/terrain_atlas.png');
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
-        game.load.image('greensquare', 'assets/img/blue.png');
+        game.load.image('greensquare', 'assets/img/green.png');
 
         //sets up loading appropriate tilemap and associated info for selected map
         maps.forEach(function(map){

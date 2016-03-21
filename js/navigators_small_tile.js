@@ -72,10 +72,10 @@ var MapState = function(mapName, walkables, agentPaths){
 
             var style = {
                 font: '14px Arial',
-                fill: '#fff',
+                fill: 'red',
                 align: 'left'
             }
-            text = game.add.text(game.world.width - 150, game.world.height - 100, '0, 0', style);
+            text = game.add.text(game.world.width - 150, game.world.height - 150, '0, 0', style);
 
         },
         update: function() {
@@ -117,7 +117,7 @@ function setupAgents(count){
     //creates agents array and assigns random sprite to each.  Adds an agent to the array
     agents = [];
     for(var i = 0; i < count; i++){
-        var agentTypes = ['redsquare','purplesquare','greensquare'];
+        var agentTypes = ['redsquare','redsquare','redsquare'];
         randomSprite = agentTypes[Math.floor(Math.random() * agentTypes.length)];
         agents.push({
             steps: [],

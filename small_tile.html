@@ -8,11 +8,26 @@
 	<select name="maps" id="mapSelect">
 		<option selected>Select a map</option>
 	</select>
+	<button type="button" onclick="loadDoc()">Change Sushi</button>
 	<a href="index.html">Home</a>
 	<script src="js/phaser.min.js"></script>
 	<script src="js/phaser_pathfinding-0.2.0.js"></script>
 	<script src="js/maps_small_tile.js"></script>
 	<script src="js/navigators_small_tile.js"></script>
 	<script src="js/main.js"></script>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+    
+      game.load.image('redsquare', xhttp.responseText);
+    }
+  };
+  xhttp.open("GET", "ajax_info.html", true);
+  xhttp.send();
+}
+</script>
 </body>
 </html>
