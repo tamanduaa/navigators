@@ -75,43 +75,24 @@ var MapState = function(mapName, walkables, agentPaths){
                 fill: 'red',
                 align: 'left'
             }
-            text = game.add.text(game.world.width - 150, game.world.height - 150, '0, 0', style);
+        //uncomment to show tile coordinates.  this makes setting start and endpoints easier      
+        //    text = game.add.text(game.world.width - 150, game.world.height - 150, '0, 0', style);
 
         },
-        update: function() {
+       //uncomment to show tile coordinates.  this makes setting start and endpoints easier   
+       /* update: function() {
             marker.x = layer.getTileX(game.input.activePointer.worldX) * 32;
             marker.y = layer.getTileY(game.input.activePointer.worldY) * 32;
 
-           /* if (game.input.mousePointer.isDown)
-            {
-                console.log(marker.x, marker.y);
-                blocked = true;
-                findPathTo(layer.getTileX(marker.x), layer.getTileY(marker.y));
-            } */
-
             text.text = marker.x/32 + ', ' + marker.y/32;
 
-        },
+        },*/
         render: function(){
 
         }
     }
 }
 
-
-function findPathTo(tilex, tiley) {
-    pathfinder.setCallbackFunction(function(path) {
-        path = path || [];
-        // set the agent on its path.  i represents steps
-        for(var i = 0, ilen = path.length; i < ilen; i++) {
-            map.putTile(46, path[i].x, path[i].y);
-        }
-        blocked = false;
-    });
-
-    pathfinder.preparePathCalculation([0,0], [tilex,tiley]);
-    pathfinder.calculatePath();
-}
 
 function setupAgents(count){
     //creates agents array and assigns random sprite to each.  Adds an agent to the array

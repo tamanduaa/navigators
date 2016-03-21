@@ -73,16 +73,18 @@ var MapState = function(mapName, walkables, agentPaths){
                 fill: '#fff',
                 align: 'left'
             }
-            text = game.add.text(game.world.width - 150, game.world.height - 100, '0, 0', style);
+          //uncomment to show tile coordinates.  this makes setting start and endpoints easier  
+          //  text = game.add.text(game.world.width - 150, game.world.height - 100, '0, 0', style);
 
         },
-        update: function() {
+      //uncomment to show tile coordinates.  this makes setting start and endpoints easier    
+      /*  update: function() {
             marker.x = layer.getTileX(game.input.activePointer.worldX) * 32;
             marker.y = layer.getTileY(game.input.activePointer.worldY) * 32;
 
             text.text = marker.x/32 + ', ' + marker.y/32;
 
-        },
+        },*/
         render: function(){
 
         }

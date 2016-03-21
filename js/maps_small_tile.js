@@ -86,10 +86,6 @@ var maps = [
 				end: {x: 49, y: 24}
 			},
 			{
-				start: {x: 66, y: 18},
-				end: {x: 49, y: 24}
-			},
-			{
 				start: {x: 57, y: 16},
 				end: {x: 49, y: 24}
 			},

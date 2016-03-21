@@ -26,10 +26,6 @@ var maps = [
 			},
 			{
 				start: {x: 0, y: 0},
-				end: {x: 3, y: 15}
-			},
-			{
-				start: {x: 0, y: 0},
 				end: {x: 30, y: 17}
 			},
 			{
@@ -48,10 +44,6 @@ var maps = [
 				start: {x: 37, y: 18},
 				end: {x: 37, y: 7}
 			},
-			{
-				start: {x: 35, y: 7},
-				end: {x: 19, y: 15}
-			}
 		]
 	},
 	{ 
@@ -80,26 +72,13 @@ var maps = [
 				end: {x: 6, y: 8}
 			},
 			{
-				start: {x: 2, y: 13},
-				end: {x: 2, y: 7}
-			},
-			{
 				start: {x: 29, y: 10},
 				end: {x: 13, y: 14}
-			},
-			{
-				start: {x: 27, y: 1},
-				end: {x: 35, y: 18}
 			},
 			{
 				start: {x: 7, y: 2},
 				end: {x: 24, y: 14}
 			},
-			{
-				start: {x: 34, y: 7},
-				end: {x: 26, y: 8}
-			}
-			
 		]
 	},
 ];
