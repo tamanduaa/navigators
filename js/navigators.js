@@ -16,13 +16,13 @@ var text;
 
 var bootState = {
     preload: function(){
-        //load tiles, agent sprites images
+        //load tiles, agent sprites images and assign them IDs
         game.load.image('tiles', 'assets/img/terrain_atlas.png');
         game.load.image('redsquare', 'assets/img/red.png');
         game.load.image('purplesquare', 'assets/img/purple.png');
         game.load.image('greensquare', 'assets/img/green.png');
 
-        //sets up loading appropriate tilemap and associated info for selected map
+        //sets up loading appropriate tilemap and associated info for selected map and new game state for each map
         maps.forEach(function(map){
             game.load.tilemap(map.name, 'assets/' + map.filename, null, Phaser.Tilemap.TILED_JSON);
             agents[map.name] = new MapState(map.name, map.walkables, map.agents);
@@ -31,7 +31,7 @@ var bootState = {
         
     },
     create: function(){
-        //starts the game with the first map on the list
+        //starts game with the first map on the list
         game.state.start(maps[0].name);
     }
 }
@@ -55,6 +55,7 @@ var MapState = function(mapName, walkables, agentPaths){
             pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
             pathfinder.setGrid(map.layers[0].data, walkables);
 
+            //outline tile
             marker = game.add.graphics();
             marker.lineStyle(2, 0xFFFFFF, 1);
             marker.drawRect(0, 0, 32, 32);
@@ -79,13 +80,6 @@ var MapState = function(mapName, walkables, agentPaths){
             marker.x = layer.getTileX(game.input.activePointer.worldX) * 32;
             marker.y = layer.getTileY(game.input.activePointer.worldY) * 32;
 
-           /* if (game.input.mousePointer.isDown)
-            {
-                console.log(marker.x, marker.y);
-                blocked = true;
-                findPathTo(layer.getTileX(marker.x), layer.getTileY(marker.y));
-            } */
-
             text.text = marker.x/32 + ', ' + marker.y/32;
 
         },
@@ -96,22 +90,8 @@ var MapState = function(mapName, walkables, agentPaths){
 }
 
 
-function findPathTo(tilex, tiley) {
-    pathfinder.setCallbackFunction(function(path) {
-        path = path || [];
-        // set the agent on its path.  i represents steps
-        for(var i = 0, ilen = path.length; i < ilen; i++) {
-            map.putTile(46, path[i].x, path[i].y);
-        }
-        blocked = false;
-    });
-
-    pathfinder.preparePathCalculation([0,0], [tilex,tiley]);
-    pathfinder.calculatePath();
-}
-
 function setupAgents(count){
-    //creates agents array and assigns random sprite to each.  Adds an agent to the array
+    //creates agents array and assigns random sprite to each agent based on index number. 
     agents = [];
     for(var i = 0; i < count; i++){
         var agentTypes = ['redsquare','purplesquare','greensquare'];
@@ -125,6 +105,7 @@ function setupAgents(count){
 }
 
 function findAgentPath(start, end, agent){
+    //sets agents on a path
     pathfinder.setCallbackFunction(function(path) {
         path = path || [];
         for(var i = 0, ilen = path.length; i < ilen; i++) {
@@ -141,6 +122,7 @@ function findAgentPath(start, end, agent){
 }
 
 function advanceTween(agent){
+    //makes the agents paths look smooth
     agent.stepsIndex++;
     agent.stepsIndex %= agent.steps.length;
     if(agent.stepsIndex == 0){

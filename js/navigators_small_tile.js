@@ -117,7 +117,7 @@ function setupAgents(count){
     //creates agents array and assigns random sprite to each.  Adds an agent to the array
     agents = [];
     for(var i = 0; i < count; i++){
-        var agentTypes = ['redsquare','redsquare','redsquare'];
+        var agentTypes = ['redsquare','redsquare','maki'];
         randomSprite = agentTypes[Math.floor(Math.random() * agentTypes.length)];
         agents.push({
             steps: [],
